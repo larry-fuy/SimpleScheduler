@@ -42,8 +42,6 @@ performance and may not be true in real world.
 
 2) A node has multiple resources, in current stage we only assume the
 resource is CPU.
-
-3) 
  
 
 Algorithm 
