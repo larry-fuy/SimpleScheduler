@@ -11,6 +11,7 @@ Simulator::run() {
       // the resources is not availabe now. 
       cluster[resources[i]][0] = 1;
       // the scheduler chose a job on the resources
+      
     }
     
   }

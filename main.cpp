@@ -12,7 +12,8 @@ int main() {
 
   // initialization
   Jobs* jobs = new Jobs(SIMU_TIME);
-  Scheduler* sch = new FCFS();
+  queue<Job>* job_q = new queue<Job>(); 
+  Scheduler* sch = new FCFS(job_q);
   Simulator sim(sch, jobs, SIMU_TIME, NUM_NODE, NUM_CPUS);
   // generate jobs
   jobs->generate();
