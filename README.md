@@ -94,7 +94,8 @@ Build and run
 3) results in util.dat and jobs.dat
 
 
-Results =============== 
+Results 
+=============== 
 
 1) util.dat includes average utilization of
 each node 
