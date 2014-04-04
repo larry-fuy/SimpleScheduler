@@ -11,9 +11,11 @@ int main() {
   const size_t NUM_CPUS = 4;
 
   // initialization
-  Job* job = new Job();
+  Jobs* jobs = new Jobs(SIMU_TIME);
   Scheduler* sch = new FCFS();
-  Simulator sim(sch, job, SIMU_TIME, NUM_NODE, NUM_CPUS);
+  Simulator sim(sch, jobs, SIMU_TIME, NUM_NODE, NUM_CPUS);
+  // generate jobs
+  jobs->generate();
 
   // run simulator
   sim.run();
@@ -22,5 +24,5 @@ int main() {
   sim.collect();
 
   // output the statistics of jobs
-  job->collect();
+  jobs->collect();
 }

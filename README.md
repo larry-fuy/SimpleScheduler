@@ -3,10 +3,13 @@ SimpleScheduler
 
 Schedulers design and evaluation in simple case 
 
-Problem
-===============
-[SCENARIO]
-As a fearless distributed systems engineer at Mesosphere, you have a great idea for a new resource-scheduling algorithm for large-scale data centers. Assume that the current scheduler is a simple first-come, first-served model which doesn't always yield optimal results. To convince your co-workers of the merits of your new scheduler, you must write a simulator that demonstrates how your scheduler outperforms the default on at least one set of test data.
+Problem =============== 
+
+ Assume that the current scheduler is a simple first-come,
+first-served model which doesn't always yield optimal results. To
+convince your co-workers of the merits of your new scheduler, you must
+write a simulator that demonstrates how your scheduler outperforms the
+default on at least one set of test data.
 
 [INPUTS]
 Available resources can be represented as a simple integer stream, for example:
@@ -17,12 +20,34 @@ A resource unit is available on compute node #7,
 A resource unit is available on compute node #1,
 and so on. Each node can have multiple resource units (e.g. multiple cpus).
 
-As these resources become available, the scheduler assigns them to incoming jobs of various sizes. For example, a job of size two requires two units from the resource stream to run - the compute node origin of the resources used is not important. Incoming job requests can also be represented as an integer stream, for example: 3 1 4 1 5 9.
+As these resources become available, the scheduler assigns them to
+incoming jobs of various sizes. For example, a job of size two
+requires two units from the resource stream to run - the compute node
+origin of the resources used is not important. Incoming job requests
+can also be represented as an integer stream, for example: 3 1 4 1 5
+9.
 
-[OUTPUT]
-To prove that your scheduling algorithm satisfies its objective, print out the final schedule and any useful statistics. That may be enough to convince your co-workers, but feel free to elaborate.
+[OUTPUT] To prove that your scheduling algorithm satisfies its
+objective, print out the final schedule and any useful
+statistics. That may be enough to convince your co-workers, but feel
+free to elaborate.
 
-Algorithm =============== 
+Assumptions =============== 
+
+1) A job is assume to have a exectution time. And we assume the job is
+not splittable. In real world a tasks may be spit its run-time in
+different nodes but this incurs a lot overhead to migrate the job. And
+the job is not preemptable. Again it is the consideration of
+performance and may not be true in real world.
+
+2) A node has multiple resources, in current stage we only assume the
+resource is CPU.
+
+3) 
+ 
+
+Algorithm 
+=============== 
 
 The algorithm used here is a very simple "time driven" algorithm. The
 time increase one unit and simulator forward one step to generate
@@ -36,20 +61,31 @@ time-driven algorithm is easier to be implented. But there is no
 difficutty for me to implement the event-driven algorithm given enough
 time.
 
+The detailed algorithm :
+intialize simulator, jobs and resources
+while ( t < simulation_time) {
+      pick the first job from the job queue (scheduler)
+      put the job the availabe resources (set the available resources unavailabe)
+end
+simulator collects statistics of resources
+jobs collect statistics of themselves
+
 
 Architecture
 ===============
 
-There are 3 classes, Simulator, Scheduler and Job. Acturally we can
-create one more class for Cluster. However to reduce complexity, I'd
-like to put function of cluster into the simulator.
+There are 3 classes, Simulator, Scheduler and Jobs.
+Simulator works for generate resources input and initialize cluster
+Scheduler works for choosing jobs
+Jobs generates the job set.
 
+Note: the resource and job set can be read from the file or other external sources. 
 
 Build and run
 ===============
 1) make
 
-2) run sim
+2) run simu
 
 3) results in util.dat and jobs.dat
 
