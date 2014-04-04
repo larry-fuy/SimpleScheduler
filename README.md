@@ -61,11 +61,17 @@ time.
 
 The detailed algorithm :
 intialize simulator, jobs and resources
+
 while ( t < simulation_time) {
+
       pick the first job from the job queue (scheduler)
+
       put the job the availabe resources (set the available resources unavailabe)
+
 end
+
 simulator collects statistics of resources
+
 jobs collect statistics of themselves
 
 
