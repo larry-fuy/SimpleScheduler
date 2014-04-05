@@ -1,5 +1,4 @@
 Problem 
-
 =============== 
 
  Assume that the current scheduler is a simple first-come,
@@ -8,7 +7,8 @@ convince your co-workers of the merits of your new scheduler, you must
 write a simulator that demonstrates how your scheduler outperforms the
 default on at least one set of test data.
 
-*INPUTS
+* INPUTS
+
 Available resources can be represented as a simple integer stream, for example:
 2 7 1 8 2 8 1 8 2 8 4 5 9 0 4 5 2 3 5 3 6 ...
 Which should be interpreted as:
@@ -24,7 +24,7 @@ origin of the resources used is not important. Incoming job requests
 can also be represented as an integer stream, for example: 3 1 4 1 5
 9.
 
-*OUTPUT
+* OUTPUT
 To prove that your scheduling algorithm satisfies its
 objective, print out the final schedule and any useful
 statistics. That may be enough to convince your co-workers, but feel
@@ -60,15 +60,12 @@ time.
 
 The detailed algorithm :
 intialize simulator, jobs and resources
-'''
-while ( t < simulation_time) 
 
-      pick the first job from the job queue (scheduler)
+	  while ( t < simulation_time) 
+      	  	pick the first job from the job queue (scheduler)
+      	  	put the job the availabe resources (set the available resources unavailabe)
+	end
 
-      put the job the availabe resources (set the available resources unavailabe)
-
-end
-'''
 simulator collects statistics of resources
 
 jobs collect statistics of themselves
@@ -86,35 +83,35 @@ Note: the resource and job set can be read from the file or other external sourc
 
 Build and run
 ===============
-1) make
+1.  make
 
-2) run simu
+2.  run simu
 
-3) results in util.dat and jobs.dat
+3.  results in util.dat and jobs.dat
 
 
 Results 
 =============== 
 
-1) util.dat includes average utilization of
+1.  util.dat includes average utilization of
 each node 
 
-2) jobs.dat include average latency 
+2.  jobs.dat include average latency 
 
-3) There are many metrics to compare scheduling algorithm. For
+3.  There are many metrics to compare scheduling algorithm. For
 example, in real-time systems which is my major research topic, it
 uses missratio, how many jobs missed their deadlines. In this case, I
 choose two common metrics to represent performance of the scheduler:
 utilzation of the cluster and latency of the jobs.
 
-a) Utlization means how much resources are consumed by the
+* Utlization means how much resources are consumed by the
 workload. In this case, I choos a coarse granuality index to show
 it. Given a node with 4 CPUs, if 3 of them are used, the utilization
 is 3 / 4 = 75%. Since this is a coarse granuality, it may not be a
 good index for the true utilization. In real-world systems or
 simulator, the counter of CPU usage is often used for this purpose.
 
-b) Latency means the time between tasks starting and finishing. This
+* Latency means the time between tasks starting and finishing. This
 is a important index from the perspective of the client. In batch
 systems, this index reflects the system throughtput.  c) There are
 many other metrics to show how good a scheduling algorithm is, for
