@@ -10,45 +10,62 @@
 
 using namespace std;
 
-typedef vector<vector<int>> utilization_t;
+typedef vector<vector<int>> resources_util_t;
 
 class Simulator {
 private:
   Scheduler* sch;
-  Job* job;
   int sim_time;
   size_t num_node;
   size_t num_cpus;
+  size_t max_size; 
 
-  utilization_t util;
-  // for results
+  resources_util_t resources_util;
+  jobs_t jobs;
+
+  // For results
   ofstream util_file;
-  vector<vector<int>> cluster;
-  vector<int> resources;
+  ofstream latency_file;
+  ofstream log_file;
 
 public:
-  Simulator(Scheduler* s, Jobs* j, const int t, const size_t nn, const size_t nc) :
-    sch(s), sim_time(t), num_node(nn), num_cpus(nc) {
-    resources.resize(sim_time);
-
+  Simulator(Scheduler* s, const int t, const size_t nn, const size_t nc, const size_t sz) :
+    sch(s), sim_time(t), num_node(nn), num_cpus(nc), max_size(sz) {
+    resources_util.resize(sim_time, vector<int>(num_node, 0));
+    jobs.resize(sim_time);
     // utilization file
-    util_file.open("util.dat");
-
-    // cluster init
-    for (auto i = 0; i < num_node; ++i)
-      cluster.push_back(vector<int>(num_cpus, 0));
-
-    // resource input generate or  it can be read from files
-    for (auto i = 0; i < sim_time; ++i) 
-      resources[i] = rand() % num_node;
-  };
+    util_file.open("util.txt");
+    // latency file
+    latency_file.open("latency.txt");
+    // file to log
+    log_file.open("log.txt");
+    log_file << "simulation time : " << sim_time << endl
+	     << "number of node : " << num_node << endl
+	     << "number_cpus : " << num_cpus << endl
+	     << "job max size : " << max_size << endl;
+    log_file << endl;
+  }
 
   ~Simulator() { 
-    util_file.close();
-};
+    util_file.close(); 
+    latency_file.close();
+    log_file.close();
+  }
 
   // run simulator
   void run();
+  
+  // put job on the resources the scheduller pick
+  void run_job(jobs_t j, resources_t r, int time);
+  
+  // update when new job and resource available
+  void update(Job j, resource_t r, int time);
+
+  // one input  job
+  Job get_input_job(int time);
+  
+  // one input resource
+  int get_input_resource();  
 
   // collect statistics
   void collect();

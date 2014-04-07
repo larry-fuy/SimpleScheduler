@@ -1,29 +1,22 @@
 // Simulator for the scheduler
-#include<iostream>
+#include"job.hpp"
 #include"scheduler.hpp"
 #include"simulator.hpp"
-#include"job.hpp"
+
+// simulation parameters
+// Todo : read parameters from configuration file
+const int SIMU_TIME = 100;
+const size_t NUM_NODE = 16;
+const size_t NUM_CPUS = 16;
+const size_t MAX_SIZE = 4;   // max size of the job, in real world no such limit
 
 int main() {
-  // simulation time
-  const int SIMU_TIME = 10000;
-  const size_t NUM_NODE = 16;
-  const size_t NUM_CPUS = 4;
 
   // initialization
-  Jobs* jobs = new Jobs(SIMU_TIME);
-  queue<Job>* job_q = new queue<Job>(); 
-  Scheduler* sch = new FCFS(job_q);
-  Simulator sim(sch, jobs, SIMU_TIME, NUM_NODE, NUM_CPUS);
-  // generate jobs
-  jobs->generate();
-
+  Scheduler* sch = new FCFS(NUM_NODE);
+  Simulator sim(sch, SIMU_TIME, NUM_NODE, NUM_CPUS, MAX_SIZE);
   // run simulator
   sim.run();
-
   // output the statistics of cluster 
   sim.collect();
-
-  // output the statistics of jobs
-  jobs->collect();
 }

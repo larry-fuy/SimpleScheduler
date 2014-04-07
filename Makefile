@@ -4,10 +4,10 @@ CXXFLAGS = -std=c++11 -g -Wall
 LDFLAGS=
 
 HEADERS=job.hpp scheduler.hpp simulator.cpp
-SOURCES=job.cpp scheduler.cpp simulator.cpp main.cpp
+SOURCES=scheduler.cpp simulator.cpp main.cpp
 TARGET=simu
 
-.PHONY : all test clean
+.PHONY : all clean
 
 all : $(SOURCES) $(HEADERS) 
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(SOURCES) -o $(TARGET)

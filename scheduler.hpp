@@ -1,36 +1,48 @@
 // Scheduler
 #pragma once
 #include<queue>
+#include<vector>
 #include<algorithm>
+#include<iostream>
 
 #include "job.hpp"
 
 using namespace std;
 
-//base class
+typedef vector<int> resources_t;
+typedef int resource_t;
+typedef queue<Job> jobs_que_t;
+typedef vector<Job> jobs_t;
+
+//abstract class
 class Scheduler {
 public:
-  Scheduler() {};
-  virtual Job get_job() {};
-  virtual Job set_job() {};
-  virtual ~Scheduler() {};
+  virtual void run(jobs_t& jobs, resources_t& resources) = 0;
+  virtual void update_jobs(Job j) = 0;
+  virtual void update_resources(resource_t r) = 0;
 };
 
 // First come first serve scheduler
 class FCFS: public Scheduler {
 public:
-  FCFS(queue<Job>* j) : jobs(j) {}
-  virtual Job get_job() {
-    Job j = jobs->front();
-    jobs->pop();
-    return j;
+  FCFS(int num_node)  {
+    resources.resize(num_node, 0); 
+  };
+  ~FCFS() {};
+
+  virtual void update_jobs(Job j)  {
+    jobs_que.push(j);
   }
-  virtual void set_job(Job j) {
-    jobs->push(j);
+  
+  virtual void update_resources(resource_t r) {
+        resources[r]++;
   }
-  virtual ~FCFS() { }
-private:
-  queue<Job>* jobs;
+
+  virtual void run(jobs_t& jobs, resources_t& resources);
+
+ private:
+  jobs_que_t jobs_que;
+  resources_t resources;
 };
 
 // 
