@@ -13,4 +13,4 @@ all : $(SOURCES) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(SOURCES) -o $(TARGET)
 
 clean :
-	rm *.~ $(TARGET)
+	rm -f *.~ $(TARGET)
