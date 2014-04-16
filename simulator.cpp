@@ -23,7 +23,7 @@ Simulator::run() {
     vector<int> sch_r;
     sch->run(sch_j, sch_r);
 
-    // run job
+    // run job on a node
     run_job(sch_j, sch_r, i);
   }
 }
@@ -35,10 +35,16 @@ Simulator::collect() {
   // 2) along the time 
   // Todo : it seems a bug here
   util_file << "average utilization: " << endl;
-  long util_sum = 0.;
-  for (auto i = 0; i < sim_time; ++i) 
-    util_sum += long(accumulate(begin(resources_util[i]), end(resources_util[i]), 0)) / long((num_node * num_cpus));
-  util_file << util_sum / sim_time << endl;
+  vector<double> util_sum(num_node, 0);
+  for (size_t i = 0; i < sim_time; ++i) {
+     for (size_t j = 0; j < num_node; ++j) {
+        util_sum[j] += double(resources_util[i][j]) / num_cpus; 
+     }
+  }
+  
+  for (size_t i = 0; i < num_node; ++i) {
+     util_file << util_sum[i] / sim_time << endl;
+  }
   
   // latency 
   latency_file << " average latency: " << endl;
@@ -47,12 +53,12 @@ Simulator::collect() {
   latency_file << long(latency_sum) / long(sim_time) << endl;
 
   // log
-  for (size_t i = 0; i <jobs.size(); ++i) {
-    log_file << "job : " << jobs[i].Id 
-	     << " size : " << jobs[i].size
-	     << "  start : " << jobs[i].start 
-	     << "  exec : " << jobs[i].exec
-	     << " node : " << jobs[i].node
+  for (const auto& job : jobs) {
+    log_file << "job : " << job.Id 
+	     << " size : " << job.size
+	     << "  start : " << job.start 
+	     << "  exec : " << job.exec
+	     << " node : " << job.node
 	     << endl;
   }
 }
