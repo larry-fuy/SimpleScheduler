@@ -45,4 +45,3 @@ public:
   resources_t resources;
 };
 
-// 
