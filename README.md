@@ -1,6 +1,6 @@
 SimpleScheduler
 ===============
 
-Schedulers design and evaluation in simple case 
+A scheduler design and evaluation in simple case 
 
 
